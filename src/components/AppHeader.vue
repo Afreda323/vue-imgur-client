@@ -20,8 +20,5 @@ export default {
   name: 'AppHeader',
   methods: mapActions(['login', 'logout']),
   computed: mapGetters(['isLoggedIn']),
-  mounted() {
-    console.log(this.isLoggedIn)
-  },
 }
 </script>
