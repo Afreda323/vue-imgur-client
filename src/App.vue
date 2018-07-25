@@ -1,10 +1,18 @@
 <template>
-  <h1>Hello World</h1>
+  <v-app dark>
+    <AppHeader />
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
+import AppHeader from './components/AppHeader'
+
 export default {
   name: "App",
+  components: {
+    AppHeader
+  }
 }
 </script>
 
