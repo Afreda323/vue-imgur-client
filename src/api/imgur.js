@@ -15,6 +15,21 @@ export default {
     axios.get(
       `${ROOT_URL}/3/account/me/images`,
       { headers: { Authorization: `Bearer ${token}` } }
-    )
+    ),
+
+  uploadImages: (files, token) => {
+    const promises = Array.from(files).map(image => {
+      const formData = new FormData()
+      formData.append('image', image)
+
+      return axios.post(
+        `${ROOT_URL}/3/image`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+    })
+
+    return Promise.all(promises)
+  }
 
 }

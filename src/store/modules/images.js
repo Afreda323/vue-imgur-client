@@ -1,14 +1,11 @@
 import imgur from '../../api/imgur'
+import { router } from '../../main'
 
 const state = {
   images: [],
   loadingImages: false,
 
-  upload: {
-    loading: false,
-    success: false,
-    failure: false,
-  }
+  uploadLoading: false
 }
 
 const getters = {
@@ -26,25 +23,21 @@ const actions = {
     console.log(data)
     commit('setImages', data)
   },
-  uploadImage() { },
+  async uploadImages({ rootState, commit }, images) {
+    commit('uploadImageRequest')
+    const { token } = rootState.auth
+    await imgur.uploadImages(images, token)
+    commit('uploadImageDone')
+    router.push('/')
+  },
 }
 
 const mutations = {
   uploadImageRequest(state) {
-    state.upload.loading = true
+    state.uploadLoading = true
   },
-  uploadImageSuccess(state) {
-    state.upload.loading = false
-    state.upload.success = true
-  },
-  uploadImageFailure(state) {
-    state.upload.loading = false
-    state.upload.failure = true
-  },
-  clearMessages(state) {
-    state.upload.loading = false
-    state.upload.success = false
-    state.upload.failure = false
+  uploadImageDone(state) {
+    state.uploadLoading = false
   },
   fetchImageRequest(state) {
     state.loadingImages = true
